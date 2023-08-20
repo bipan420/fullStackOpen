@@ -8,7 +8,7 @@ sequenceDiagram
   
   Note right of browser: Browser executes JavaScript code that fetches the JSON from the server
   
-  Note right of browser: Browser executes the callback function that renders the notes 
+  Note right of browser: Browser updates the notes without re-rendering the page
   
 
 ```
