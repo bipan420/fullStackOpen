@@ -50,8 +50,7 @@ const App = () => {
     setTotal(newClicks.left + newClicks.right + newClicks.factor)
   }
 
-  const increaseBy = (incValue) => {
-    return () => {
+  const increaseBy = (incValue) => () => {
       const newClicks = {
         ...clicks,
         factor: clicks.factor + incValue
@@ -59,7 +58,6 @@ const App = () => {
       setClicks(newClicks)
       setTotal(newClicks.left + newClicks.right + newClicks.factor)
     }
-  }
   
   return (
     <div>
