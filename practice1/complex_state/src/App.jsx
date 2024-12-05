@@ -24,7 +24,8 @@ const App = () => {
   // const [right, setRight] = useState(0)
   const [clicks, setClicks] = useState({
     left: 0,
-    right: 0
+    right: 0,
+    factor: 0
   })
   const [allClicks, setAll] = useState([])
   const [total, setTotal] = useState(0)
@@ -36,7 +37,7 @@ const App = () => {
     }
     setClicks(newClicks)
     
-    setTotal(newClicks.left + newClicks.right)
+    setTotal(newClicks.left + newClicks.right + newClicks.factor)
   }
 
   const handleRightClick = () => {
@@ -46,7 +47,18 @@ const App = () => {
       right: clicks.right+1
     }
     setClicks(newClicks)
-    setTotal(newClicks.left + newClicks.right)
+    setTotal(newClicks.left + newClicks.right + newClicks.factor)
+  }
+
+  const increaseBy = (incValue) => {
+    return () => {
+      const newClicks = {
+        ...clicks,
+        factor: clicks.factor + incValue
+      }
+      setClicks(newClicks)
+      setTotal(newClicks.left + newClicks.right + newClicks.factor)
+    }
   }
   
   return (
@@ -56,7 +68,9 @@ const App = () => {
       <p>{clicks.right}</p>
       <p>Total {total}</p>
       <Button onClick={handleLeftClick} text="left" />
-<Button onClick={handleRightClick} text="right" />
+      <Button onClick={handleRightClick} text="right" />
+      <Button onClick={increaseBy(100)} text="Increase by 100" />
+      <Button onClick= {increaseBy(1000)} text="Increase by 1000" />
     </div>
   )
 }
