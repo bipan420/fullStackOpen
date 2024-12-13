@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import axios from 'axios'
 const usePhoneBook = () => {
     const [persons, setPersons] = useState([
         {
@@ -14,6 +15,14 @@ const usePhoneBook = () => {
       const [newName, setNewName] = useState('')
       const [newNumber, setNewNumber] = useState('')
       const [filterPerson, setFilter] = useState('')
+
+      useEffect(()=>{
+        axios.get("https://animated-space-capybara-pg46qwxvq5p3777q-3001.app.github.dev/persons")
+        .then(response => {
+          setPersons(response.data)
+        })
+      },[])
+
       const savePhoneBook = (event) => {
         event.preventDefault()
     
