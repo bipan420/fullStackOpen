@@ -24,8 +24,8 @@ const App = () => {
   useEffect(() => {
     noteService
     .getAll()
-    .then(response => {
-      setNotes(response.data)
+    .then(initialResponse => {
+      setNotes(initialResponse)
     })
   },[])
 
@@ -50,15 +50,15 @@ const App = () => {
 
     noteService
     .create(noteObject)
-    .then(response => {
-      setNotes(notes.concat(response.data))
+    .then(returnedNote => {
+      setNotes(notes.concat(returnedNote))
       setNewNote('')
     })
     
   }
 
   const toggleImportanceOf = (id) => {
-    const url = `https://animated-space-capybara-pg46qwxvq5p3777q-3001.app.github.dev/notes/${id}`
+    //const url = `https://animated-space-capybara-pg46qwxvq5p3777q-3001.app.github.dev/notes/${id}`
     const note = notes.find(n => n.id === id)
     const changedNote = {...note, important: !note.important}
 
@@ -67,10 +67,14 @@ const App = () => {
     //   setNotes(notes.map(n => n.id === id ? response.data : n))
     // })
 
-    axios
+    noteService
     .update(id, changedNote)
-    .then(response => {
-      setNotes(notes.map(n => n.id === id ? response.data : n))
+    .then(returnedNote => {
+      setNotes(notes.map(note => note.id === id ? returnedNote : note))
+    })
+    .catch(error => {
+      alert(`the note '${note.content}' was already deleted from the server`)
+      setNotes(notes.filter(note => note.id !== id))
     })
   }
 
