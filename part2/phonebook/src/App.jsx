@@ -16,6 +16,7 @@ const App = () => {
     numberFieldChanged,
     filterFieldChanged,
     filteredPersons,
+    deletePerson
   } = usePhoneBook();
 
   return (
@@ -38,7 +39,7 @@ const App = () => {
 
       <h2>Numbers</h2>
 
-      <Persons filteredPersons={filteredPersons} />
+      <Persons filteredPersons={filteredPersons} deletePerson={deletePerson} />
     </div>
   )
 }

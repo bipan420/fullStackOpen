@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import axios from 'axios'
+import phonebookService from "../services/phonebook"
 const usePhoneBook = () => {
     const [persons, setPersons] = useState([
         {
@@ -17,10 +17,12 @@ const usePhoneBook = () => {
       const [filterPerson, setFilter] = useState('')
 
       useEffect(()=>{
-        axios.get("https://animated-space-capybara-pg46qwxvq5p3777q-3001.app.github.dev/persons")
-        .then(response => {
-          setPersons(response.data)
-        })
+        // axios.get("https://animated-space-capybara-pg46qwxvq5p3777q-3001.app.github.dev/persons")
+        // .then(response => {
+        //   setPersons(response.data)
+        // })
+
+        phonebookService.getAll().then(initialResponse => {setPersons(initialResponse)})
       },[])
 
       const savePhoneBook = (event) => {
@@ -33,16 +35,33 @@ const usePhoneBook = () => {
           return
         }
         const found = persons.find(person => person.name === trimmedName)
+        console.log("found", found)
         if (!found) {
           const person = {
             name: trimmedName,
             number: trimmedNumber
           }
-          setPersons(persons.concat(person))
+          phonebookService
+          .savePhonebook(person)
+          .then(returnedData => {setPersons(persons.concat(returnedData))})
+          
     
         }
         else {
-          alert("The person named " + trimmedName + " already exists in the phonebook.")
+          const confirmReplace = window.confirm(newName +" already exists in the phonebook, replace the old number with a new one ?")
+          if (confirmReplace) {
+            
+            const updatedPerson = {
+              name: found.name,
+              number: trimmedNumber
+            }
+            phonebookService
+            .updatePhonebook(found.id, updatedPerson)
+            .then(returnedPerson => {
+              setPersons(persons.map(person => person.id != found.id ? person: returnedPerson))
+            })
+          }
+
         }
         setNewName('')
         setNewNumber('')
@@ -65,6 +84,22 @@ const usePhoneBook = () => {
       })
       console.log("filtered persons", filteredPersons)
 
+      const deletePerson = (id) => {
+        const toBeDeleted = persons.filter(person => person.id === id)
+        // console.log("to be deleted", toBeDeleted[0].name)
+        const confirmDelete = window.confirm("Delete "+ toBeDeleted[0].name + " ?")
+        if (confirmDelete) {
+          phonebookService
+        .deletePhonebook(id)
+        .then(deletedData => {
+          const updatedPerson = persons.filter(person => person.id !== deletedData.id)
+          setPersons(updatedPerson)
+
+        })
+        }
+        
+      }
+
       return {
         persons,
         newName,
@@ -75,6 +110,7 @@ const usePhoneBook = () => {
         filterFieldChanged,
         numberFieldChanged,
         filteredPersons,
+        deletePerson
       }
 }
 export default usePhoneBook
