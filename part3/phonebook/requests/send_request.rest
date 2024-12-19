@@ -1,0 +1,13 @@
+GET https://animated-space-capybara-pg46qwxvq5p3777q-3001.app.github.dev/api/persons/
+
+###
+DELETE https://animated-space-capybara-pg46qwxvq5p3777q-3001.app.github.dev/api/persons/1
+
+###
+POST https://animated-space-capybara-pg46qwxvq5p3777q-3001.app.github.dev/api/persons
+Content-Type: application/json
+
+{
+  "name":"John Morisson", 
+  "number": "123456789"
+}
