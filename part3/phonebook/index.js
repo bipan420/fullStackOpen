@@ -94,7 +94,10 @@ app.post('/api/persons', (request, response) => {
   }
   persons = persons.concat(person)
   response.json(persons)
+  console.log(JSON.stringify(person))
 })
+
+morgan.token('type', function(req, res) { return req.body ? JSON.stringify(res.body) : ''})
 
 const unknownEndpoint = (request, response) => {
   response.status(404).send({error: 'unknown endpoint'})

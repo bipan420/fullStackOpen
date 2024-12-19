@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'https://animated-space-capybara-pg46qwxvq5p3777q-3001.app.github.dev/notes'
+const baseUrl = 'https://animated-space-capybara-pg46qwxvq5p3777q-3001.app.github.dev/api/notes'
 
 const getAll = () => {
    const request = axios.get(baseUrl)
