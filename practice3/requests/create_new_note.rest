@@ -1,0 +1,8 @@
+
+POST https://animated-space-capybara-pg46qwxvq5p3777q-3001.app.github.dev/api/notes
+Content-Type: application/json
+
+{
+  "content": "REST client is a simple and good tool for testing in vs code",
+  "important": true
+}

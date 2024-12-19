@@ -1,0 +1,2 @@
+
+GET https://animated-space-capybara-pg46qwxvq5p3777q-3001.app.github.dev/api/notes
